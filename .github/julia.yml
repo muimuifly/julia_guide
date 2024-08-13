@@ -1,0 +1,28 @@
+name: Julia
+'on':
+- push
+- repository_dispatch
+
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        julia-version: ['1.6']
+        julia-arch: [x86]
+        os: [ubuntu-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: julia-actions/setup-julia@v1
+        with:
+          version: ${{ matrix.julia-version }}
+          arch: ${{ matrix.julia-arch }}
+      - name: julia test
+        run: julia --project -e 'using Pkg; Pkg.test()'
+        working-directory: ./julia
