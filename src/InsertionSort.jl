@@ -4,7 +4,18 @@ using Test
 using Random
 
 function insertion_sort!(array::Array{Int, 1})
-    # Insert your code here
+    for i in 2:length(array)
+        key = array[i]
+        j = i - 1
+        
+        # Move elements of array[1..i-1], that are greater than key,
+        # to one position ahead of their current position
+        while j >= 1 && array[j] > key
+            array[j + 1] = array[j]
+            j -= 1
+        end
+        array[j + 1] = key
+    end
 end
 
 function check_sort(N::Int = 100)
